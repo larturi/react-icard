@@ -5,13 +5,22 @@ import * as Yup from 'yup';
 
 import './LoginForm.scss';
 
+import { loginApi } from '../../../api/user';
+
 export const LoginForm = () => {
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
-        onSubmit: (formValues) => {
-            console.log(formValues);
+        onSubmit: async (formValues) => {
+            try {
+                const response = await loginApi(formValues);
+                const { access } = response;
+                console.log(access);
+
+            } catch (error) {
+                console.log(error);
+            }
         }
     });
 
