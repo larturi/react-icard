@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 import './LoginForm.scss';
 
@@ -19,7 +20,7 @@ export const LoginForm = () => {
                 console.log(access);
 
             } catch (error) {
-                console.log(error);
+                toast.error(error.message);
             }
         }
     });
