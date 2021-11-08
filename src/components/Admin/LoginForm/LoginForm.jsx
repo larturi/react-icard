@@ -4,12 +4,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-import {} from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks/useAuth';
 import './LoginForm.scss';
 
 import { loginApi } from '../../../api/user';
 
 export const LoginForm = () => {
+
+    const { login } = useAuth();
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -18,7 +20,7 @@ export const LoginForm = () => {
             try {
                 const response = await loginApi(formValues);
                 const { access } = response;
-                console.log(access);
+                login(access);
 
             } catch (error) {
                 toast.error(error.message);
