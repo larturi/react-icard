@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { createContext, useEffect, useState } from 'react';
 
 import { getToken, removeToken, setToken } from '../api/token';
@@ -26,7 +28,7 @@ export function AuthProvider(props) {
                 setAuth(null)
             }
         })();
-    }, [getMe])
+    }, [])
 
     const login = async (token) => {
         setToken(token);

@@ -1,5 +1,5 @@
 import { AdminLayout } from '../layouts';
-import { HomeAdmin } from '../pages/AdminPages/HomeAdmin'
+import { HomeAdmin, UsersAdmin } from '../pages/AdminPages'
 
 const routesAdmin = [
     {
@@ -7,7 +7,13 @@ const routesAdmin = [
         layout: AdminLayout,
         component: HomeAdmin,
         exact: true
-    }
+    },
+    {
+        path: '/admin/users',
+        layout: AdminLayout,
+        component: UsersAdmin,
+        exact: true
+    },
 ];
 
 export default routesAdmin;
