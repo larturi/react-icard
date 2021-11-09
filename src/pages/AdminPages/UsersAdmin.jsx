@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect } from 'react';
-import { HeaderPage } from '../../components/Admin'
+import { Loader } from 'semantic-ui-react';
+import { HeaderPage, TableUsers } from '../../components/Admin'
 
 import { useAuth, useUser } from '../../hooks'
 
 export const UsersAdmin = () => {
 
     const { auth } = useAuth();
-    const { users, getUsers } = useUser();
+    const { loading, users, getUsers } = useUser();
 
     useEffect(() => {
         getUsers();
@@ -22,7 +23,11 @@ export const UsersAdmin = () => {
                     btnTitle="Nuevo Usuario"
                     btnTitleTwo="Eliminar Usuario"
                 />
-                <h1>Users Admin</h1>
+                {loading ? (
+                    <Loader active inline="centered">Cargando...</Loader>
+                ) : (
+                    <TableUsers users={users} />
+                )}
             </>
         )
     } else {
