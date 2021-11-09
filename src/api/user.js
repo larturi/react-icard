@@ -1,6 +1,8 @@
+import { fetchData } from "./fetchData";
+
 const BASE_API = process.env.REACT_APP_BASE_API;
 
-export async function loginApi(formValues) {
+export const loginApi = async (formValues) => {
     try {
         const url = `${BASE_API}/api/auth/login/`;
         const params = {
@@ -11,7 +13,7 @@ export async function loginApi(formValues) {
             body: JSON.stringify(formValues)
         };
 
-        const response = await fetch(url, params);
+        const response = await fetchData(url, params);
 
         if (response.status !== 200) {
             throw new Error('Usuario o Password incorrectos')
@@ -24,7 +26,7 @@ export async function loginApi(formValues) {
     }
 };
 
-export async function getMeApi(token) {
+export const getMeApi = async (token) => {
     try {
         const url = `${BASE_API}/api/auth/me/`;
         const params = {
@@ -33,7 +35,27 @@ export async function getMeApi(token) {
             },
         };
 
-        const response = await fetch(url, params);
+        const response = await fetchData(url, params);
+
+        const result = await response.json();
+        return result;
+        
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getUsersApi = async (token) => {
+    try {
+        const url = `${BASE_API}/api/users/`;
+        const params = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+        };
+
+        const response = await fetchData(url, params);
+
         const result = await response.json();
         return result;
         
