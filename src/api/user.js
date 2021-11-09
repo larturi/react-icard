@@ -55,8 +55,8 @@ export const getUsersApi = async (token) => {
         };
 
         const response = await fetchData(url, params);
-
         const result = await response.json();
+        
         return result;
         
     } catch (error) {

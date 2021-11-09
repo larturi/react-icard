@@ -1,11 +1,19 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import { useAuth } from '../../hooks'
+import React, { useEffect } from 'react';
 
+import { useAuth, useUser } from '../../hooks'
 
 export const UsersAdmin = () => {
 
     const { auth } = useAuth();
+    const { loading, users, getUsers } = useUser();
+
+    console.log(users);
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     if(auth.me?.is_staff) {
         return (
