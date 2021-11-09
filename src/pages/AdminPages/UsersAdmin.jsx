@@ -21,7 +21,6 @@ export const UsersAdmin = () => {
                 <HeaderPage 
                     title="Usuarios"
                     btnTitle="Nuevo Usuario"
-                    btnTitleTwo="Eliminar Usuario"
                 />
                 {loading ? (
                     <Loader active inline="centered">Cargando...</Loader>
