@@ -7,7 +7,9 @@ import { useUser } from '../../../../hooks'
 
 import './AddEditUserForm.scss';
 
-export const AddEditUserForm = () => {
+export const AddEditUserForm = (props) => {
+
+    const { onClose, onRefetch } = props;
 
     const { addUser } = useUser();
 
@@ -17,7 +19,9 @@ export const AddEditUserForm = () => {
         validateOnChange: false,
         onSubmit: async (formValues) => {
             try {
-                await addUser(formValues)
+                await addUser(formValues);
+                onRefetch();
+                onClose();
             } catch (error) {
                 console.error(error);
             }

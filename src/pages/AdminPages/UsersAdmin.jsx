@@ -12,19 +12,23 @@ export const UsersAdmin = () => {
     const [ titleModal, setTitleModal ] = useState(null);
     const [ showModal, setShowModal ] = useState(false);
     const [ contentModal, setContentModal ] = useState(null);
+    const [ refetch, setRefetch ] = useState(false);
 
     const { auth } = useAuth();
     const { loading, users, getUsers } = useUser();
 
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [refetch]);
 
     const openCloseModal = () => setShowModal((prev) => !prev);
+    const onRefetch = () => setRefetch((prev) => !prev);
 
     const createUser = () => {
         setTitleModal("Nuevo Usuario");
-        setContentModal(<AddEditUserForm />);
+        setContentModal(
+            <AddEditUserForm onClose={openCloseModal} onRefetch={onRefetch} />
+        );
         openCloseModal();
     }
 
