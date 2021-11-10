@@ -109,3 +109,24 @@ export const updateUserApi = async (id, data, token) => {
         throw error;
     }
 };
+
+export const deleteUserApi = async (id, token) => {
+    try {
+        const url = `${BASE_API}/api/users/${id}/`;
+
+        const params = {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        
+        return result;
+        
+    } catch (error) {
+        throw error;
+    }
+};
