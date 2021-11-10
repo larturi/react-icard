@@ -27,10 +27,27 @@ export const UsersAdmin = () => {
     const createUser = () => {
         setTitleModal("Nuevo Usuario");
         setContentModal(
-            <AddEditUserForm onClose={openCloseModal} onRefetch={onRefetch} />
+            <AddEditUserForm 
+                onClose={openCloseModal} 
+                onRefetch={onRefetch} 
+                btnName="Crear" 
+            />
         );
         openCloseModal();
-    }
+    };
+
+    const updateUser = (data) => {
+        setTitleModal("Editar Usuario");
+        setContentModal(
+            <AddEditUserForm 
+                onClose={openCloseModal} 
+                onRefetch={onRefetch} 
+                btnName="Editar" 
+                user={data}
+            />
+        );
+        openCloseModal();
+    };
 
     if(auth.me?.is_staff) {
         return (
@@ -43,7 +60,7 @@ export const UsersAdmin = () => {
                 {loading ? (
                     <Loader active inline="centered">Cargando...</Loader>
                 ) : (
-                    <TableUsers users={users} />
+                    <TableUsers users={users} updateUser={updateUser} />
                 )}
 
                 <ModalBasic 

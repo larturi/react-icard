@@ -6,7 +6,7 @@ import './TableUsers.scss';
 
 export const TableUsers = (props) => {
 
-    const { users } = props;
+    const { users, updateUser } = props;
 
     return (
         <Table className="table-users-admin">
@@ -35,7 +35,7 @@ export const TableUsers = (props) => {
                         <Table.Cell className="status">
                             {user.is_staff ? <Icon name="check"/> : <Icon name="close"/>}
                         </Table.Cell>
-                        <Actions user={user} />
+                        <Actions user={user} updateUser={updateUser} />
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -46,11 +46,11 @@ export const TableUsers = (props) => {
 
 const Actions = (props) => {
 
-    const { user } = props;
+    const { user, updateUser } = props;
     
     return (
         <Table.Cell textAlign="right">
-            <Button icon onClick={() => console.log(user)}>
+            <Button icon onClick={() => updateUser(user)}>
                 <Icon name="pencil" />
             </Button>
             <Button icon negative onClick={() => console.log(user)}>

@@ -9,17 +9,21 @@ import './AddEditUserForm.scss';
 
 export const AddEditUserForm = (props) => {
 
-    const { onClose, onRefetch } = props;
+    const { onClose, onRefetch, btnName, user } = props;
 
-    const { addUser } = useUser();
+    const { addUser, updateUser } = useUser();
 
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: Yup.object(newUserValidationSchema()),
+        initialValues: initialValues(user),
+        validationSchema: Yup.object(user ? updateUserValidationSchema() : newUserValidationSchema()),
         validateOnChange: false,
         onSubmit: async (formValues) => {
             try {
-                await addUser(formValues);
+                if(user) {
+                    await updateUser(user.id, formValues);
+                } else {
+                    await addUser(formValues);
+                }
                 onRefetch();
                 onClose();
             } catch (error) {
@@ -83,31 +87,37 @@ export const AddEditUserForm = (props) => {
                 /> Administrador
             </div>
 
-            <Button type="submit" content="Crear" primary fluid />
+            <Button type="submit" content={btnName} primary fluid />
         </Form>
     )
 };
 
-const initialValues = () => (
-    {
-        username: '',
-        email: '',
-        first_name: '',
-        last_name: '',
-        is_active: true,
-        is_staff: false,
-        password: '',
-    }
-);
+const initialValues = (data) => ({
+    username: data?.username || '',
+    email: data?.email || '',
+    first_name: data?.first_name || '',
+    last_name: data?.last_name || '',
+    is_active: data?.is_active ? true : false,
+    is_staff: data?.is_staff ? true : false,
+    password: '',
+});
 
-const newUserValidationSchema = () => (
-    {
-        username: Yup.string().required(true),
-        email: Yup.string().email(true).required(true),
-        first_name: Yup.string(),
-        last_name: Yup.string(),
-        is_active: Yup.bool().required(true),
-        is_staff: Yup.bool().required(true),
-        password: Yup.string().required(true),
-    }
-);
+const newUserValidationSchema = () => ({
+    username: Yup.string().required(true),
+    email: Yup.string().email(true).required(true),
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    is_active: Yup.bool().required(true),
+    is_staff: Yup.bool().required(true),
+    password: Yup.string().required(true),
+});
+
+const updateUserValidationSchema = () => ({
+    username: Yup.string().required(true),
+    email: Yup.string().email(true).required(true),
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    is_active: Yup.bool().required(true),
+    is_staff: Yup.bool().required(true),
+    password: Yup.string(),
+});
