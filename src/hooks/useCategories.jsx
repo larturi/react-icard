@@ -4,6 +4,7 @@ import {
     getCategoriesApi,
     addCategoryApi,
     updateCategoryApi,
+    deleteCategoryApi,
 } from '../api/category';
 
 import { useAuth } from './';
@@ -42,7 +43,18 @@ export function useCategories() {
     const updateCategory = async (id, data) => {
         try {
             setLoading(true);
-            await updateCategoryApi(id ,data, auth.token);
+            await updateCategoryApi(id, data, auth.token);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    };
+
+    const deleteCategory = async (id) => {
+        try {
+            setLoading(true);
+            await deleteCategoryApi(id, auth.token);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -57,6 +69,7 @@ export function useCategories() {
         getCategories,
         addCategory,
         updateCategory,
+        deleteCategory
     }
 
 };

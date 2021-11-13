@@ -12,7 +12,7 @@ import './AddEditCategoryForm.scss';
 
 export const AddEditCategoryForm = (props) => {
 
-    const { onClose, onRefech, category } = props;
+    const { onClose, onRefetch, category } = props;
     const [previewImage, setPreviewImage] = useState(category?.image || null);
     const { addCategory, updateCategory } = useCategories();
 
@@ -27,7 +27,7 @@ export const AddEditCategoryForm = (props) => {
                 else 
                     await addCategory(formValues);
                 
-                onRefech();
+                onRefetch();
                 onClose();
             } catch (error) {
                 console.error(error);
