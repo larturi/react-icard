@@ -4,18 +4,30 @@ import { useDropzone } from 'react-dropzone';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { useCategories } from '../../../../hooks';
+
 import './AddEditCategoryForm.scss';
 
-export const AddEditCategoryForm = () => {
+export const AddEditCategoryForm = (props) => {
+
+    const { onClose, onRefech } = props;
 
     const [previewImage, setPreviewImage] = useState(null);
+
+    const { addCategory } = useCategories();
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(newSchema()),
         validateOnChange: false,
-        onSubmit: (formValues) => {
-            console.log(formValues);
+        onSubmit: async (formValues) => {
+            try {
+                await addCategory(formValues);
+                onRefech();
+                onClose();
+            } catch (error) {
+                console.error(error);
+            }
         }
     })
 
