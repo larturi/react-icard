@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
 
@@ -26,7 +28,13 @@ export const CategoriesAdmin = () => {
         setTitleModal("Nueva Categoria");
         setContentModal(<AddEditCategoryForm onClose={openCloseModal} onRefech={onRefech} />);
         openCloseModal();
-    }
+    };
+
+    const editCategory = (data) => {
+        setTitleModal("Editar Categoria");
+        setContentModal(<AddEditCategoryForm onClose={openCloseModal} onRefech={onRefech} category={data} />);
+        openCloseModal();
+    };
 
     return (
         <>
@@ -38,7 +46,7 @@ export const CategoriesAdmin = () => {
             {loading ? (
                 <Loader active inline="centered">Cargando...</Loader>
             ) : (
-                <TableCategoriesAdmin categories={categories} />
+                <TableCategoriesAdmin categories={categories} editCategory={editCategory} />
             )}
 
             <ModalBasic 

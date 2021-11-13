@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useCallback, useState } from 'react';
 import { Form, Image, Button} from 'semantic-ui-react';
 import { useDropzone } from 'react-dropzone';
@@ -10,19 +12,21 @@ import './AddEditCategoryForm.scss';
 
 export const AddEditCategoryForm = (props) => {
 
-    const { onClose, onRefech } = props;
-
-    const [previewImage, setPreviewImage] = useState(null);
-
-    const { addCategory } = useCategories();
+    const { onClose, onRefech, category } = props;
+    const [previewImage, setPreviewImage] = useState(category?.image || null);
+    const { addCategory, updateCategory } = useCategories();
 
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: Yup.object(newSchema()),
+        initialValues: initialValues(category),
+        validationSchema: Yup.object(category ? updateSchema() : newSchema()),
         validateOnChange: false,
         onSubmit: async (formValues) => {
             try {
-                await addCategory(formValues);
+                if (category) 
+                    await updateCategory(category.id, formValues);
+                else 
+                    await addCategory(formValues);
+                
                 onRefech();
                 onClose();
             } catch (error) {
@@ -56,10 +60,10 @@ export const AddEditCategoryForm = (props) => {
             <Button 
                 type="button" 
                 fluid 
-                color={formik.errors.image ? 'red' : 'green'}
+                color={formik.errors.image ? 'red' : 'grey'}
                 {...getRootProps()}
             >
-                Subir imagen
+                {previewImage ? "Cambiar imagen" : "Subir imagen"}
             </Button>
 
             <input {...getInputProps()} />
@@ -69,19 +73,27 @@ export const AddEditCategoryForm = (props) => {
                 fluid
             />
 
-            <Button type="submit" primary fluid>
-                Crear Categoria
-            </Button>
+            <Button 
+                type="submit" 
+                primary 
+                fluid
+                content={category ? "Actualizar" : "Crear"}
+            />
         </Form>
     )
 }
 
-const initialValues = () => ({
-    title: '',
+const initialValues = (data) => ({
+    title: data?.title || '',
     image: ''
 });
 
 const newSchema = () => ({
     title: Yup.string().required(true),
     image: Yup.string().required(true)
+});
+
+const updateSchema = () => ({
+    title: Yup.string().required(true),
+    image: Yup.string()
 });
