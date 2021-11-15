@@ -40,7 +40,6 @@ export const TableCategoriesAdmin = (props) => {
 };
 
 const Actions = (props) => {
-
     const { category, editCategory, deleteCategory } = props;
 
     return (
@@ -53,5 +52,4 @@ const Actions = (props) => {
             </Button>
         </Table.Cell>
     )
-
-}
+};

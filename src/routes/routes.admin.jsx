@@ -2,7 +2,8 @@ import { AdminLayout } from '../layouts';
 import { 
     HomeAdmin, 
     UsersAdmin, 
-    CategoriesAdmin 
+    CategoriesAdmin,
+    ProductsAdmin,
 } from '../pages/AdminPages'
 
 const routesAdmin = [
@@ -22,6 +23,12 @@ const routesAdmin = [
         path: '/admin/categories',
         layout: AdminLayout,
         component: CategoriesAdmin,
+        exact: true
+    },
+    {
+        path: '/admin/products',
+        layout: AdminLayout,
+        component: ProductsAdmin,
         exact: true
     },
 ];
