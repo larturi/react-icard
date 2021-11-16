@@ -33,9 +33,7 @@ export const TableProductAdmin = (props) => {
                         <Table.Cell className="status">
                             {product.active ? <Icon name="check" /> : <Icon name="close" />}
                         </Table.Cell>
-                        <Table.Cell>
-                            <Actions product={product} /> 
-                        </Table.Cell>
+                        <Actions product={product} /> 
                     </Table.Row>
                 ))}
             </Table.Body>
