@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { map } from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Form, Image, Button, Dropdown, Checkbox } from 'semantic-ui-react';
+import { useDropzone } from 'react-dropzone';
 
 import { useCategories } from '../../../../hooks'
 
@@ -11,6 +12,7 @@ import './AddEditProductForm.scss';
 export const AddEditProductForm = () => {
 
     const [categoriesFormat, setCategoriesFormat] = useState([]);
+    const [previewImage, setPreviewImage] = useState(null);
 
     const { categories, getCategories } = useCategories();
 
@@ -19,6 +21,18 @@ export const AddEditProductForm = () => {
     useEffect(() => {
         setCategoriesFormat(formatDrownData(categories))
     }, [categories]);
+
+    const onDrop = useCallback((acceptedFile) => {
+        const file = acceptedFile[0];
+        setPreviewImage(URL.createObjectURL(file));
+    },[]);
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: "image/jpeg, image/png",
+        noKeyboard: true,
+        multiple: false,
+        onDrop
+    })
 
     return (
         <Form className="add-edit-product-form">
@@ -37,7 +51,13 @@ export const AddEditProductForm = () => {
                 <Checkbox toggle /> Producto activo
             </div>
 
-            <Button type="button" fluid>Subir Imagen</Button>
+            <Button type="button" fluid {...getRootProps()}>
+                Subir Imagen
+            </Button>
+
+            <input {...getInputProps()} />
+
+            <Image src={previewImage}/>
 
             <Button type="submit" primary fluid>Crear Producto</Button>
         </Form>
