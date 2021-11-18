@@ -13,7 +13,6 @@ export const getProductsApi = async () => {
     }
 };
 
-
 export const addProductApi = async (data, token) => {
     try {
         const formData = new FormData();
@@ -61,6 +60,25 @@ export const updateProductApi = async (id, data, token) => {
                 "Authorization": `Bearer ${token}`,
             },
             body: formData
+        };
+
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const deleteProductApi = async (id, token) => {
+    try {
+        const url = `${BASE_API}/api/products/${id}/`;
+
+        const params = {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
         };
 
         const response = await fetchData(url, params);

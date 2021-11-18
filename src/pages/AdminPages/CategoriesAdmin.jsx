@@ -42,7 +42,7 @@ export const CategoriesAdmin = () => {
 
     const onDeleteCategory = (data) => {
         MySwal.fire({
-            title: 'Eliminar categoria',
+            title: 'Eliminar Categoria',
             text: "Esta acción no se puede revertir",
             icon: 'warning',
             showCancelButton: true,

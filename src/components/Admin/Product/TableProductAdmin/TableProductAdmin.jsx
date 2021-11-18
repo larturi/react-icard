@@ -6,7 +6,7 @@ import './TableProductAdmin.scss';
 
 export const TableProductAdmin = (props) => {
 
-    const { products, updateProduct } = props;
+    const { products, updateProduct, onDeleteProduct } = props;
 
     return (
         <Table className="table-product-admin">
@@ -33,7 +33,11 @@ export const TableProductAdmin = (props) => {
                         <Table.Cell className="status">
                             {product.active ? <Icon name="check" /> : <Icon name="close" />}
                         </Table.Cell>
-                        <Actions product={product} updateProduct={updateProduct} /> 
+                        <Actions 
+                            product={product} 
+                            updateProduct={updateProduct} 
+                            onDeleteProduct={onDeleteProduct}
+                        /> 
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -43,14 +47,14 @@ export const TableProductAdmin = (props) => {
 
 const Actions = (props) => {
     
-    const { product, updateProduct } = props;
+    const { product, updateProduct, onDeleteProduct } = props;
 
     return (
         <Table.Cell textAlign="right">
             <Button icon onClick={() => updateProduct(product)}>
                 <Icon name="pencil" />
             </Button>
-            <Button icon negative onClick={() => console.log('Delete')}>
+            <Button icon negative onClick={() => onDeleteProduct(product)}>
                 <Icon name="close" />
             </Button>
         </Table.Cell>
