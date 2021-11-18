@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { 
     getProductsApi,
+    addProductApi
 } from '../api/product';
 
 import { useAuth } from './';
@@ -26,11 +27,24 @@ export function useProduct() {
         }
     };
 
+    const addProduct = async (data) => {
+        try {
+            setLoading(true);
+            const response = await addProductApi(data, auth.token);
+            setLoading(false);
+            setProducts(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    };
+
     return {
         loading,
         error,
         products,
         getProducts,
+        addProduct,
     }
 
 };

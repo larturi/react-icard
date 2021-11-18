@@ -7,16 +7,19 @@ import { useDropzone } from 'react-dropzone';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useCategories } from '../../../../hooks'
+import { useCategories, useProduct } from '../../../../hooks'
 
 import './AddEditProductForm.scss';
 
-export const AddEditProductForm = () => {
+export const AddEditProductForm = (props) => {
+
+    const { onClose, onRefetch } = props;
 
     const [categoriesFormat, setCategoriesFormat] = useState([]);
     const [previewImage, setPreviewImage] = useState(null);
 
     const { categories, getCategories } = useCategories();
+    const { addProduct } = useProduct();
 
     useEffect(() => getCategories(), []);
 
@@ -41,8 +44,10 @@ export const AddEditProductForm = () => {
         initialValues,
         validationSchema: Yup.object(newValidationSchema()),
         validateOnChange: false,
-        onSubmit: (formValues) => {
-            console.log(formValues);
+        onSubmit: async (formValues) => {
+            await addProduct(formValues);
+            onRefetch();
+            onClose();
         }
     })
 
