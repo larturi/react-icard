@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
 
@@ -20,12 +22,24 @@ export const ProductsAdmin = () => {
     const onRefetch = () => setRefetch((prev) => !prev);
 
     const addProduct = () => {
-        setTitleModal("Nuevo producto");
+        setTitleModal("Nuevo Producto");
         setContentModal(
             <AddEditProductForm onClose={openCloseModal} onRefetch={onRefetch} /> 
         );
         openCloseModal();
-    }
+    };
+
+    const updateProduct = (data) => {
+        setTitleModal("Actualizar Producto");
+        setContentModal(
+            <AddEditProductForm 
+                onClose={openCloseModal} 
+                onRefetch={onRefetch} 
+                product={data} 
+            /> 
+        );
+        openCloseModal();
+    };
 
     return (
         <>
@@ -36,7 +50,7 @@ export const ProductsAdmin = () => {
                     Cargando...
                 </Loader>
             ) : (
-                <TableProductAdmin products={products} />
+                <TableProductAdmin products={products} updateProduct={updateProduct} />
             )}
 
             <ModalBasic 

@@ -2,7 +2,7 @@
 
 import { map } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Form, Image, Button, Dropdown, Checkbox } from 'semantic-ui-react';
+import { Form, Image, Button, Checkbox } from 'semantic-ui-react';
 import { useDropzone } from 'react-dropzone';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -13,13 +13,13 @@ import './AddEditProductForm.scss';
 
 export const AddEditProductForm = (props) => {
 
-    const { onClose, onRefetch } = props;
+    const { onClose, onRefetch, product } = props;
 
     const [categoriesFormat, setCategoriesFormat] = useState([]);
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(product ? product.image : null);
 
     const { categories, getCategories } = useCategories();
-    const { addProduct } = useProduct();
+    const { addProduct, updateProduct } = useProduct();
 
     useEffect(() => getCategories(), []);
 
@@ -41,11 +41,16 @@ export const AddEditProductForm = (props) => {
     });
 
     const formik = useFormik({
-        initialValues,
-        validationSchema: Yup.object(newValidationSchema()),
+        initialValues: initialValues(product),
+        validationSchema: Yup.object(product ? updateValidationSchema() : newValidationSchema()),
         validateOnChange: false,
         onSubmit: async (formValues) => {
-            await addProduct(formValues);
+            if (product) {
+                await updateProduct(product.id, formValues);
+            } else {
+                await addProduct(formValues);
+            }
+
             onRefetch();
             onClose();
         }
@@ -98,7 +103,7 @@ export const AddEditProductForm = (props) => {
 
             <Image src={previewImage}/>
 
-            <Button type="submit" primary fluid>Crear Producto</Button>
+            <Button type="submit" primary fluid>{product ? 'Actualizar Producto' : "Crear Producto"}</Button>
         </Form>
     )
 };
@@ -111,12 +116,12 @@ function formatDrownData(data) {
     }));
 };
 
-function initialValues() {
+function initialValues(data) {
     return {
-        title: '',
-        price: '',
-        category: '',
-        active: false,
+        title: data?.title || '',
+        price: data?.price || '',
+        category: data?.category || '',
+        active: data?.active ? true : false,
         image: '',
     }
 };
@@ -128,5 +133,15 @@ function newValidationSchema() {
         category: Yup.number().required(true),
         active: Yup.boolean().required(true),
         image: Yup.string().required(true),
+    }
+};
+
+function updateValidationSchema() {
+    return {
+        title: Yup.string().required(true),
+        price: Yup.number().required(true),
+        category: Yup.number().required(true),
+        active: Yup.boolean().required(true),
+        image: Yup.string(),
     }
 };

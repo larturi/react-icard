@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import { 
     getProductsApi,
-    addProductApi
+    addProductApi,
+    updateProductApi,
 } from '../api/product';
 
 import { useAuth } from './';
@@ -39,12 +40,25 @@ export function useProduct() {
         }
     };
 
+    const updateProduct = async (id, data) => {
+        try {
+            setLoading(true);
+            const response = await updateProductApi(id, data, auth.token);
+            setLoading(false);
+            setProducts(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    };
+
     return {
         loading,
         error,
         products,
         getProducts,
         addProduct,
+        updateProduct,
     }
 
 };
