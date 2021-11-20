@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
 
-import { HeaderPage } from '../../components/Admin';
+import { HeaderPage, TableMesasAdmin } from '../../components/Admin';
 import { useTable } from '../../hooks';
 
 export const TablesAdmin = () => {
@@ -19,7 +19,7 @@ export const TablesAdmin = () => {
             {loading ? (
                 <Loader active inline="centered">Cargando...</Loader>
             ) : (
-                <h2>Listado</h2>
+                <TableMesasAdmin tables={tables} />
             )}
         </>
     )

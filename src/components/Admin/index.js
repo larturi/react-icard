@@ -6,5 +6,6 @@ export * from './HeaderPage';
 export * from './Users';
 export * from './Categories';
 export * from './Product';
+export * from './Mesas';
 
 
