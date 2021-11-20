@@ -8,8 +8,6 @@ export const TableMesasAdmin = (props) => {
 
     const { tables } = props;
 
-    console.log(tables);
-
     return (
         <Table className="table-tables-admin">
             <Table.Header>
