@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { 
     getTablesApi,
+    addTableApi,
 } from '../api/table';
 
 import { useAuth } from './';
@@ -25,12 +26,25 @@ export function useTable() {
             setLoading(false);
             setError(error);
         }
-    };
+    }
+
+    const addTable = async (data) => {
+        try {
+            setLoading(true);
+            const response = await addTableApi(data, auth.token);
+            setLoading(false);
+            setTables(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    }
 
     return {
         loading,
         error,
         tables,
         getTables,
+        addTable,
     }
 };

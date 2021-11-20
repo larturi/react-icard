@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
 
@@ -12,14 +14,16 @@ export const TablesAdmin = () => {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState(null);
     const [contentModal, setContentModal] = useState(null);
+    const [refetch, setRefetch] = useState(false);
 
-    useEffect(() => getTables(), []);
+    const openCloseModal = () => setShowModal(prev => !prev);    
+    const onRefetch = () => setRefetch(prev => !prev);
 
-    const openCloseModal = () => setShowModal(!showModal);
+    useEffect(() => getTables(), [refetch]);
 
     const addTable = () => {
         setTitleModal('Agregar Mesa');
-        setContentModal(<AddEditMesaForm onClose={openCloseModal}/>);
+        setContentModal(<AddEditMesaForm onClose={openCloseModal} onRefetch={onRefetch} />);
         openCloseModal();
     }
 
