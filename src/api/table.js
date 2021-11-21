@@ -54,3 +54,22 @@ export const updateTableApi = async (id, data, token) => {
         throw error;
     }
 }
+
+export const deleteTableApi = async (id, token) => {
+    try {
+        const url = `${BASE_API}/api/tables/${id}/`;
+
+        const params = {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+        };
+
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
