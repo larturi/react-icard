@@ -27,6 +27,12 @@ export const TablesAdmin = () => {
         openCloseModal();
     }
 
+    const updateTable = (data) => {
+        setTitleModal('Editar Mesa');
+        setContentModal(<AddEditMesaForm onClose={openCloseModal} onRefetch={onRefetch} table={data} />);
+        openCloseModal();
+    }
+
     return (
         <>
             <HeaderPage title="Mesas" btnTitle="Crear Nueva Mesa" btnClick={addTable} />
@@ -34,7 +40,7 @@ export const TablesAdmin = () => {
             {loading ? (
                 <Loader active inline="centered">Cargando...</Loader>
             ) : (
-                <TableMesasAdmin tables={tables} />
+                <TableMesasAdmin tables={tables} updateTable={updateTable}/>
             )}
 
             <ModalBasic 

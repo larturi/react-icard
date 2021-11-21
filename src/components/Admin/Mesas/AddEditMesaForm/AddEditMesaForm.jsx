@@ -9,18 +9,24 @@ import './AddEditMesaForm';
 
 export const AddEditMesaForm = (props) => {
 
-    const { onClose, onRefetch } = props;
+    const { onClose, onRefetch, table} = props;
 
-    const { addTable } = useTable();
+    const { addTable, updateTable } = useTable();
 
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(table),
         validationSchema: Yup.object(validationSchema()),
         validateOnChange: false,
         onSubmit: async (formValues) => {
-            await addTable(formValues);
+            if (table) {
+                await updateTable(table.id, formValues)
+            } else {
+                await addTable(formValues);
+            }
+
             onRefetch();
             onClose();
+            
         }
     });
 
@@ -36,14 +42,16 @@ export const AddEditMesaForm = (props) => {
                 onChange = {formik.handleChange}
                 error = {formik.errors.number}
             />
-            <Button type="submit" primary fluid >Crear Mesa</Button>
+            <Button type="submit" primary fluid >
+                {table ? 'Actualizar Mesa' : 'Crear Mesa'}
+            </Button>
         </Form>
     )
 }
 
-function initialValues() {
+function initialValues(data) {
     return {
-        number: ''
+        number: data?.number || ''
     }
 }
 
