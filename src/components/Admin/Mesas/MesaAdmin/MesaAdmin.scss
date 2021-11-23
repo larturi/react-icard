@@ -11,8 +11,28 @@
         cursor: pointer;
     }
 
-    img {
+    svg {
         height: 120px;
         width: 120px;
+
+        &.busy {
+            fill: #bb7900 !important;
+            color: #bb7900 !important;;
+        }
+        &.pending {
+            fill: #0094e3 !important;
+            color: #0094e3 !important;
+        }
+        &.pending-payment {
+            fill: #008000 !important;
+            color: #008000 !important;
+        }
+    }
+
+    .ui.label {
+        margin: 0;
+        font-size: 16px;
+        position: absolute;
+        top: -5px;
     }
 }
