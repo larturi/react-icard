@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Icon, Checkbox } from 'semantic-ui-react';
 import { map } from 'lodash';
 import { MesaAdmin } from '../'
@@ -9,6 +9,12 @@ export const MesasListAdmin = (props) => {
 
     const { tables } = props;
 
+    const [reload, setReload] = useState(false);
+
+    const onReload = () => {
+        setReload((prev) => !prev);
+    }
+
     return (
         <div className="tables-list-admin">
 
@@ -16,7 +22,7 @@ export const MesasListAdmin = (props) => {
                 primary
                 icon
                 className="tables-list-admin__reload"
-                onClick={() => console.log('onRefetch')}
+                onClick={() => onReload() }
             >
                 <Icon name="refresh" />
             </Button>
@@ -27,7 +33,7 @@ export const MesasListAdmin = (props) => {
             </div>
 
             {map(tables, (table) => (
-                <MesaAdmin key={table.number} table={table} />
+                <MesaAdmin key={table.number} table={table} reload={reload} />
             ))}
         </div>
     )

@@ -13,7 +13,7 @@ import './MesaAdmin.scss';
 
 export const MesaAdmin = (props) => {
 
-    const { table } = props;
+    const { table, reload } = props;
 
     const { getOrders } = useOrder();
 
@@ -23,7 +23,7 @@ export const MesaAdmin = (props) => {
     useEffect( async () => {
         const response = await getOrders(table.number, ORDER_STATUS.PENDING);
         setOrdersTable(response);
-    }, []);
+    }, [reload]);
 
     useEffect( async () => {
         const response = await getOrders(table.number, ORDER_STATUS.DELIVERED);
@@ -32,7 +32,7 @@ export const MesaAdmin = (props) => {
         } else {
             setBusyTable(false);
         }
-    }, []);
+    }, [reload]);
 
     return (
         <Link className="table-admin" to={`/admin/table/${table.id}`}>
