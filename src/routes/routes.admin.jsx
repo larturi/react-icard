@@ -4,7 +4,8 @@ import {
     UsersAdmin, 
     CategoriesAdmin,
     ProductsAdmin,
-    TablesAdmin
+    TablesAdmin,
+    TableDetailsAdmin
 } from '../pages/AdminPages'
 
 const routesAdmin = [
@@ -36,6 +37,12 @@ const routesAdmin = [
         path: '/admin/tables',
         layout: AdminLayout,
         component: TablesAdmin,
+        exact: true
+    },
+    {
+        path: '/admin/table/:id',
+        layout: AdminLayout,
+        component: TableDetailsAdmin,
         exact: true
     },
 ];
