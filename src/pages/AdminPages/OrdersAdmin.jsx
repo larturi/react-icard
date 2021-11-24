@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect } from 'react';
 import {Loader} from 'semantic-ui-react';
 import { HeaderPage, MesasListAdmin } from '../../components/Admin';

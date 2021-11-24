@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from 'react';
 import { size } from 'lodash';
 import { Label } from 'semantic-ui-react';
@@ -15,10 +17,20 @@ export const MesaAdmin = (props) => {
     const { getOrders } = useOrder();
 
     const [ordersTable, setOrdersTable] = useState([]);
+    const [busyTable, setBusyTable] = useState(false);
 
     useEffect( async () => {
         const response = await getOrders(table.number, ORDER_STATUS.PENDING);
         setOrdersTable(response);
+    }, []);
+
+    useEffect( async () => {
+        const response = await getOrders(table.number, ORDER_STATUS.DELIVERED);
+        if (size(response) > 0) {
+            setBusyTable(true);
+        } else {
+            setBusyTable(false);
+        }
     }, []);
 
     return (
@@ -31,6 +43,7 @@ export const MesaAdmin = (props) => {
             <IcTable
                 className={classNames({
                     pending: size(ordersTable) > 0,
+                    busy: busyTable,
                 })}
             />
             <p>Mesa {table.number}</p>
