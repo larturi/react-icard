@@ -6,20 +6,40 @@ import {
 
 export function useOrder() {
 
-    const [ errorOrders, setErrorOrders ] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [orders, setOrders] = useState(null);
 
     const getOrders = async (idTable, status = '', ordering = '') => {
         try {
+            setLoading(true);
             const response = await getOrdersByTablesApi(idTable, status, ordering);
+            setLoading(false);
             return response;
         } catch (error) {
-            setErrorOrders(error);
+            setLoading(false);
+            setError(error);
+        }
+    };
+
+    const getOrdersByTable = async (idTable, status, ordering) => {
+        try {
+            setLoading(true);
+            const response = await getOrdersByTablesApi(idTable, status, ordering);
+            setLoading(false);
+            setOrders(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
         }
     };
 
     return {
-        errorOrders,
+        error,
+        loading,
+        orders,
         getOrders,
+        getOrdersByTable
     }
 
 };
