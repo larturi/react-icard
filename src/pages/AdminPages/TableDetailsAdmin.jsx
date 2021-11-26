@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 
@@ -10,12 +10,18 @@ import { ListOrderAdmin } from '../../components/Admin/Mesas/MesaDetailAdmin';
 
 export const TableDetailsAdmin = () => {
 
+    const [reloadOrders, setReloadOrders] = useState(false);
+
     const { id } = useParams();
     const { loading, orders, getOrdersByTable } = useOrder();
 
     useEffect(() => {
         getOrdersByTable(id, '', 'ordering=-status,created_at');
-    }, []);
+    }, [reloadOrders]);
+
+    const onReloadorders = () => {
+        setReloadOrders((prev) => !prev);
+    }
 
     return (
         <>
@@ -23,7 +29,7 @@ export const TableDetailsAdmin = () => {
             {loading ? (
                 <Loader active inline='centered'>Cargando...</Loader>
             ) : (
-                <ListOrderAdmin orders={orders} />
+                <ListOrderAdmin orders={orders} onReloadorders={onReloadorders} />
             )}
         </>
     )
