@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import './OrderItemAdmin.scss';

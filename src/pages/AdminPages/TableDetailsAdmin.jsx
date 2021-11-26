@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
@@ -12,10 +14,8 @@ export const TableDetailsAdmin = () => {
     const { loading, orders, getOrdersByTable } = useOrder();
 
     useEffect(() => {
-        getOrdersByTable(id);
+        getOrdersByTable(id, '', 'ordering=-status,created_at');
     }, []);
-
-    console.log(orders);
 
     return (
         <>
