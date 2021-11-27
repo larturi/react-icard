@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 
-import { useOrder } from '../../hooks';
+import { useOrder, useTable } from '../../hooks';
 import { HeaderPage } from '../../components/Admin';
 import { ListOrderAdmin } from '../../components/Admin/Mesas/MesaDetailAdmin';
 
@@ -14,10 +14,13 @@ export const TableDetailsAdmin = () => {
 
     const { id } = useParams();
     const { loading, orders, getOrdersByTable } = useOrder();
+    const { getTable, table } = useTable();
 
     useEffect(() => {
         getOrdersByTable(id, '', 'ordering=-status,created_at');
-    }, [reloadOrders]);
+    }, [id, reloadOrders]);
+
+    useEffect(() => getTable(id), [id])
 
     const onReloadorders = () => {
         setReloadOrders((prev) => !prev);
@@ -25,7 +28,7 @@ export const TableDetailsAdmin = () => {
 
     return (
         <>
-            <HeaderPage title="Detalle de mesa" />
+            <HeaderPage title={`Detalle de mesa ${table?.number || ''}`} />
             {loading ? (
                 <Loader active inline='centered'>Cargando...</Loader>
             ) : (

@@ -13,6 +13,17 @@ export const getTablesApi = async () => {
     }
 };
 
+export const getTableApi = async (idTable) => {
+    try {
+        const url = `${BASE_API}/api/tables/${idTable}`;
+        const response = await fetchData(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const addTableApi = async (data, token) => {
     try {
         const url = `${BASE_API}/api/tables/`;
