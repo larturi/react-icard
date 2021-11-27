@@ -47,7 +47,11 @@ export const TableDetailsAdmin = () => {
             )}
 
             <ModalBasic show={showModal} onClose={openCloseModal} title="Generar pedido">
-                <AddOrderForm idTable={id} openCloseModal={openCloseModal}/>
+                <AddOrderForm 
+                    idTable={id} 
+                    openCloseModal={openCloseModal} 
+                    onReloadorders={onReloadorders} 
+                />
             </ModalBasic>
         </>
     )

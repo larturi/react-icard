@@ -37,3 +37,25 @@ export const checkDeliveredOrderApi = async (id) => {
         throw error;
     }
 };
+
+export const addOrderToTableApi = async (idTable, idProduct) => {
+    try {
+        const url = `${BASE_API}/api/orders/`;
+        const params = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                status: ORDER_STATUS.PENDING,
+                table: idTable,
+                product: idProduct
+            }),  
+        };
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};

@@ -5,14 +5,15 @@ import { Form, Image, Button, Dropdown } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { map } from 'lodash';
-import { useProduct } from '../../../../hooks';
+import { useProduct, useOrder } from '../../../../hooks';
 
 import './AddOrderForm.scss';
 
 export const AddOrderForm = (props) => {
 
-    const { idTable, openCloseModal} = props;
+    const { idTable, openCloseModal, onReloadorders} = props;
     const { products, getProducts, getProductById } = useProduct();
+    const { addOrderToTable } = useOrder();
 
     const [productsFormat, setProductsFormat] = useState([]);
     const [productsData, setProductsData] = useState([]);
@@ -25,7 +26,11 @@ export const AddOrderForm = (props) => {
         validationSchema: Yup.object(validationSchema()),
         validateOnChange: false,
         onSubmit: async (formValues) => {
-            console.log(formValues);
+            for await (const idProduct of formValues.products) {
+                await addOrderToTable(idTable, idProduct);
+            }
+            onReloadorders();
+            openCloseModal();
         }
     });
 
@@ -48,7 +53,11 @@ export const AddOrderForm = (props) => {
         }
     }
 
-    console.log(productsData);
+    const removeProductList = (index) => {
+        const idProducts = [...formik.values.products];
+        idProducts.splice(index, 1);
+        formik.setFieldValue('products', idProducts);
+    }
 
     return (
         <Form className="add-order-form" onSubmit={formik.handleSubmit}>
@@ -71,7 +80,14 @@ export const AddOrderForm = (props) => {
                             <Image src={product.image} size="tiny" avatar />
                             <span>{product.title}</span>
                         </div>
-                        <Button type="button" basic color="red">Eliminar</Button>
+                        <Button 
+                            type="button" 
+                            basic 
+                            color="red"
+                            onClick={() => removeProductList(index)}
+                        >
+                            Eliminar
+                        </Button>
                     </div>
                 ))}
             </div>
