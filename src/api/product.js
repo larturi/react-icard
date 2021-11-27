@@ -13,6 +13,17 @@ export const getProductsApi = async () => {
     }
 };
 
+export const getProductByIdApi = async (id) => {
+    try {
+        const url = `${BASE_API}/api/products/${id}/`;
+        const response = await fetchData(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const addProductApi = async (data, token) => {
     try {
         const formData = new FormData();
