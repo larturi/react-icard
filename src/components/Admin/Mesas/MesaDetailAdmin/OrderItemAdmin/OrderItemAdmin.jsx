@@ -11,7 +11,7 @@ import './OrderItemAdmin.scss';
 export const OrderItemAdmin = (props) => {
 
     const { order, onReloadorders } = props;
-    const { title, image } = order.product_data;
+    const { title, image, price } = order.product_data;
     const { checkDeliveredOrder } = useOrder();
 
     const onCheckdeliveredOrder = async () => {
@@ -36,7 +36,7 @@ export const OrderItemAdmin = (props) => {
             </div>
             <div className='order-item-admin__product'>
                 <Image src={image} />
-                <p>{title.toUpperCase()}</p>
+                <p>{`${title.toUpperCase()} $${price}`}</p>
             </div>
             {
                 order.status === ORDER_STATUS.PENDING && (
