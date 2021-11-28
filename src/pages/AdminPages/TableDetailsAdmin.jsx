@@ -17,7 +17,7 @@ export const TableDetailsAdmin = () => {
     const [reloadOrders, setReloadOrders] = useState(false);
 
     const { id } = useParams();
-    const { loading, orders, getOrdersByTable } = useOrder();
+    const { loading, orders, getOrdersByTable, addPaymentToOrder } = useOrder();
     const { getTable, table } = useTable();
     const { createPayment } = usePayment();
 
@@ -31,7 +31,7 @@ export const TableDetailsAdmin = () => {
 
     useEffect(() => getTable(id), [id])
 
-    const onReloadorders = () => {
+    const onReloadOrders = () => {
         setReloadOrders((prev) => !prev);
     }
 
@@ -71,7 +71,11 @@ export const TableDetailsAdmin = () => {
 
                         const payment = await createPayment(paymentData);
 
-                        console.log(payment);
+                        for await (const order of orders) {
+                            await addPaymentToOrder(order.id, payment.id);
+                        }
+
+                        onReloadOrders();
 
                         resolve();
                     } else {
@@ -94,14 +98,14 @@ export const TableDetailsAdmin = () => {
             {loading ? (
                 <Loader active inline='centered'>Cargando...</Loader>
             ) : (
-                <ListOrderAdmin orders={orders} onReloadorders={onReloadorders} />
+                <ListOrderAdmin orders={orders} onReloadorders={onReloadOrders} />
             )}
 
             <ModalBasic show={showModal} onClose={openCloseModal} title="Generar pedido">
                 <AddOrderForm 
                     idTable={id} 
                     openCloseModal={openCloseModal} 
-                    onReloadorders={onReloadorders} 
+                    onReloadorders={onReloadOrders} 
                 />
             </ModalBasic>
         </>

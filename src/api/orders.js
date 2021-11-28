@@ -59,3 +59,23 @@ export const addOrderToTableApi = async (idTable, idProduct) => {
         throw error;
     }
 };
+
+export const addPaymentToOrderApi = async (idOrder, idPayment) => {
+    try {
+        const url = `${BASE_API}/api/orders/${idOrder}/`;
+        const params = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                payment: idPayment
+            }),  
+        };
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import {
     getOrdersByTablesApi,
     checkDeliveredOrderApi,
-    addOrderToTableApi
+    addOrderToTableApi,
+    addPaymentToOrderApi,
 } from '../api/orders';
 
 export function useOrder() {
@@ -51,6 +52,14 @@ export function useOrder() {
             setError(error);
         } 
     }
+    ;
+    const addPaymentToOrder = async (idOrder, idPayment) => {
+        try {
+            await addPaymentToOrderApi(idOrder, idPayment);
+        } catch (error) {
+            setError(error);
+        } 
+    };
 
     return {
         error,
@@ -59,7 +68,8 @@ export function useOrder() {
         getOrders,
         getOrdersByTable,
         checkDeliveredOrder,
-        addOrderToTable
+        addOrderToTable,
+        addPaymentToOrder,
     }
 
 };
