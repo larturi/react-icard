@@ -38,7 +38,7 @@ export function useOrder() {
 
     const checkDeliveredOrder = async (idOrder) => {
         try {
-            const response = await checkDeliveredOrderApi(idOrder);
+            await checkDeliveredOrderApi(idOrder);
         } catch (error) {
             setError(error);
         }
