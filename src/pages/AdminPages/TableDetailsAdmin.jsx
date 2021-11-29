@@ -51,7 +51,7 @@ export const TableDetailsAdmin = () => {
     }
 
     const openCreatePayment = async () => {
-        const { paymentType } = await MySwal.fire({
+        await MySwal.fire({
             title: 'Medio de pago',
             input: 'select',
             inputOptions: {
