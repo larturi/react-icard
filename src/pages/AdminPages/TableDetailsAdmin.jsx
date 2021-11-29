@@ -19,9 +19,10 @@ export const TableDetailsAdmin = () => {
     const { id } = useParams();
     const { loading, orders, getOrdersByTable, addPaymentToOrder } = useOrder();
     const { getTable, table } = useTable();
-    const { createPayment } = usePayment();
+    const { createPayment, getPaymentByTable } = usePayment();
 
     const [showModal, setshowModal] = useState(false);
+    const [paymentData, setPaymentData] = useState(null)
 
     const MySwal = withReactContent(Swal);
 
@@ -29,7 +30,17 @@ export const TableDetailsAdmin = () => {
         getOrdersByTable(id, '', 'ordering=-status,created_at');
     }, [id, reloadOrders]);
 
-    useEffect(() => getTable(id), [id])
+    useEffect(() => getTable(id), [id]);
+
+    useEffect(() => {
+        ( async() => {
+            const response = await getPaymentByTable(id);
+            if(response.length > 0) {
+                // Cuenta pedida
+                setPaymentData(response[0]);
+            } 
+        })()
+    }, [reloadOrders]);
 
     const onReloadOrders = () => {
         setReloadOrders((prev) => !prev);
@@ -90,9 +101,9 @@ export const TableDetailsAdmin = () => {
         <>
             <HeaderPage 
                 title={`Detalle de mesa ${table?.number || ''}`} 
-                btnTitle="Añadir pedido"
+                btnTitle={paymentData ? "Ver Cuenta" : "Añadir pedido"} 
                 btnClick={openCloseModal}
-                btnTitleTwo="Generar cuenta"
+                btnTitleTwo={!paymentData ? "Generar Cuenta" : null}
                 btnClickTwo={openCreatePayment}
             />
             {loading ? (
@@ -102,11 +113,15 @@ export const TableDetailsAdmin = () => {
             )}
 
             <ModalBasic show={showModal} onClose={openCloseModal} title="Generar pedido">
-                <AddOrderForm 
-                    idTable={id} 
-                    openCloseModal={openCloseModal} 
-                    onReloadorders={onReloadOrders} 
-                />
+                { paymentData ? (
+                    <h2>Detalles de la cuenta</h2>
+                ) : (
+                    <AddOrderForm 
+                        idTable={id} 
+                        openCloseModal={openCloseModal} 
+                        onReloadorders={onReloadOrders} 
+                    />
+                )}
             </ModalBasic>
         </>
     )
