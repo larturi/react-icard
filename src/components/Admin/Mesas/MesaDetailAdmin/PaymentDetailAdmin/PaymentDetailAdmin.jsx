@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { usePayment } from '../../../../../hooks'
+import { usePayment, useOrder } from '../../../../../hooks'
 
 import './PaymentDetailAdmin.scss';
 
@@ -11,6 +11,7 @@ export const PaymentDetailAdmin = (props) => {
     const { payment, orders, openCloseModal, onReloadOrders } = props;
 
     const { closePayment } = usePayment();
+    const { closeOrder, checkDeliveredOrder } = useOrder();
 
     const MySwal = withReactContent(Swal);
 
@@ -38,8 +39,17 @@ export const PaymentDetailAdmin = (props) => {
                 cancelButtonText: 'Cancelar'
               }).then( async (result) => {
                 if (result.isConfirmed) {
+                    // Marca como pagado en Payments
                     await closePayment(payment.id);
+
+                    // Marca como cerradas las ordenes en Orders
+                    for await (const order of orders) {
+                        await closeOrder(order.id);
+                        await checkDeliveredOrder(order.id);
+                    }
+
                     onReloadOrders();
+                    openCloseModal();
                 }
               });
         } catch (error) {

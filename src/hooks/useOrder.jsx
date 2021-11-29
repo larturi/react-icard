@@ -5,6 +5,7 @@ import {
     checkDeliveredOrderApi,
     addOrderToTableApi,
     addPaymentToOrderApi,
+    closeOrderApi,
 } from '../api/orders';
 
 export function useOrder() {
@@ -51,11 +52,19 @@ export function useOrder() {
         } catch (error) {
             setError(error);
         } 
-    }
-    ;
+    };
+    
     const addPaymentToOrder = async (idOrder, idPayment) => {
         try {
             await addPaymentToOrderApi(idOrder, idPayment);
+        } catch (error) {
+            setError(error);
+        } 
+    };
+
+    const closeOrder = async (idOrder) => {
+        try {
+            await closeOrderApi(idOrder);
         } catch (error) {
             setError(error);
         } 
@@ -70,6 +79,7 @@ export function useOrder() {
         checkDeliveredOrder,
         addOrderToTable,
         addPaymentToOrder,
+        closeOrder,
     }
 
 };

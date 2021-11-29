@@ -100,7 +100,7 @@ export const TableDetailsAdmin = () => {
     return (
         <>
             <HeaderPage 
-                title={`Detalle de mesa ${table?.number || ''}`} 
+                title={`Mesa ${table?.number || ''}`} 
                 btnTitle={paymentData ? "Ver Cuenta" : "Añadir pedido"} 
                 btnClick={openCloseModal}
                 btnTitleTwo={!paymentData ? "Generar Cuenta" : null}
