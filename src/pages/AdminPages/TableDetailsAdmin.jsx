@@ -10,7 +10,7 @@ import { forEach} from 'lodash';
 import { useOrder, useTable, usePayment } from '../../hooks';
 import { HeaderPage, AddOrderForm } from '../../components/Admin';
 import { ModalBasic } from '../../components/Common';
-import { ListOrderAdmin } from '../../components/Admin/Mesas/MesaDetailAdmin';
+import { ListOrderAdmin, PaymentDetailAdmin } from '../../components/Admin/Mesas/MesaDetailAdmin';
 
 export const TableDetailsAdmin = () => {
 
@@ -114,7 +114,12 @@ export const TableDetailsAdmin = () => {
 
             <ModalBasic show={showModal} onClose={openCloseModal} title="Generar pedido">
                 { paymentData ? (
-                    <h2>Detalles de la cuenta</h2>
+                    <PaymentDetailAdmin 
+                        payment={paymentData}
+                        orders={orders}
+                        openCloseModal={openCloseModal}
+                        onReloadOrders={onReloadOrders}
+                    />
                 ) : (
                     <AddOrderForm 
                         idTable={id} 
