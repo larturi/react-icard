@@ -1,11 +1,18 @@
 import React from 'react';
 import { Table, Button, Icon } from 'semantic-ui-react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { usePayment } from '../../../../../hooks'
 
 import './PaymentDetailAdmin.scss';
 
 export const PaymentDetailAdmin = (props) => {
 
     const { payment, orders, openCloseModal, onReloadOrders } = props;
+
+    const { closePayment } = usePayment();
+
+    const MySwal = withReactContent(Swal);
 
     const getIconPayment = (paymentType) => {
         switch(paymentType) {
@@ -17,6 +24,29 @@ export const PaymentDetailAdmin = (props) => {
                 return 'credit card outline';
         }
     }
+
+    const onCloseTable = async () => {
+        try {
+            MySwal.fire({
+                title: 'Cerrar Cuenta',
+                text: "Esta acción no se puede revertir",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Cerrar Cuenta',
+                cancelButtonText: 'Cancelar'
+              }).then( async (result) => {
+                if (result.isConfirmed) {
+                    await closePayment(payment.id);
+                    onReloadOrders();
+                }
+              });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <div className="payment-detail">
@@ -42,7 +72,13 @@ export const PaymentDetailAdmin = (props) => {
                 </Table.Body>
             </Table>
 
-            <Button primary fluid onClick={() => console.log('Cerrar mesa')}>Marcar como Pagado y cerrar mesa</Button>
+            <Button 
+                primary 
+                fluid 
+                onClick={onCloseTable}
+            >
+                MARCAR COMO PAGADO Y CERRAR MESA
+            </Button>
 
         </div>
     )

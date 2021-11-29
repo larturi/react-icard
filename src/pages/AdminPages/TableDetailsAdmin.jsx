@@ -112,7 +112,7 @@ export const TableDetailsAdmin = () => {
                 <ListOrderAdmin orders={orders} onReloadorders={onReloadOrders} />
             )}
 
-            <ModalBasic show={showModal} onClose={openCloseModal} title="Generar pedido">
+            <ModalBasic show={showModal} onClose={openCloseModal} title={paymentData ? "Cerrar Mesa" : "Generar Pedido"}>
                 { paymentData ? (
                     <PaymentDetailAdmin 
                         payment={paymentData}

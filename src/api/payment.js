@@ -45,3 +45,25 @@ export const getPaymentByTableApi = async (idTable) => {
         throw error;
     }
 };
+
+export const closePaymentApi = async (idPayment) => {
+    try {
+        const url = `${BASE_API}/api/payments/${idPayment}/`;
+
+        const params = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                status_payment: PAYMENT_STATUS.PAID
+            })
+        };
+
+        const response = await fetchData(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
