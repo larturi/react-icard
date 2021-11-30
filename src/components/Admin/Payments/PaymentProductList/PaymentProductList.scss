@@ -1,0 +1,24 @@
+.payment-product-list {
+
+    &__product {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 20px;
+        margin-bottom: 15px;
+
+        .ui.tiny.image {
+            margin-right: 20px;
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    &__total {
+        margin: 19px;
+        font-size: 16px;
+        font-weight: bold;
+        float: right;
+    }
+
+}

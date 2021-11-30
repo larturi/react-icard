@@ -99,3 +99,14 @@ export const closeOrderApi = async (idOrder) => {
         throw error;
     }
 };
+
+export const getOrdersByPaymentApi = async (idPayment) => {
+    try {
+        const url = `${BASE_API}/api/orders/?payment=${idPayment}`;
+        const response = await fetchData(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}

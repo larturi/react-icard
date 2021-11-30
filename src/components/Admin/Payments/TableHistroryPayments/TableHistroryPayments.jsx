@@ -4,6 +4,7 @@ import { map } from 'lodash';
 import moment from 'moment'; 
 
 import { ModalBasic } from '../../../Common';
+import { PaymentProductList } from '../../../Admin';
 
 import './TableHistroryPayments.scss';
 
@@ -18,9 +19,9 @@ export const TableHistroryPayments = (props) => {
     const openCloseModal = () => setShowModal(prev => !prev);
 
     const showDetails = (payment) => {
-        setTitleModal(`Pedidos de la Mesa ${payment.table_data.number}`);
+        setTitleModal(`Pedido #${payment.id} - Mesa ${payment.table_data.number}`);
         setContentModal(
-            <h2>Hola</h2>
+            <PaymentProductList payment={payment}/>
         );
         openCloseModal();
     }
