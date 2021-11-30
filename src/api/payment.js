@@ -67,3 +67,20 @@ export const closePaymentApi = async (idPayment) => {
         throw error;
     }
 };
+
+export const getPaymentsApi = async () => {
+    try {
+
+        const paymentFilter = `status_payment=${PAYMENT_STATUS.PAID}`;
+        const orderFilter = `ordering=created_at`;
+
+        const url = `${BASE_API}/api/payments/?${paymentFilter}&${orderFilter}`;
+
+        const response = await fetchData(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
