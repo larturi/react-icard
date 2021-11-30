@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
-import { HeaderPage } from '../../components/Admin';
+import { HeaderPage, TableHistroryPayments } from '../../components/Admin';
 import { usePayment } from '../../hooks';
  
 export const PaymentsHistory = () => {
@@ -13,15 +13,13 @@ export const PaymentsHistory = () => {
         getPayments();
     }, [])
 
-    console.log(payments);
-
     return (
         <>
             <HeaderPage title="Historial de Pagos" />
             {loading ? (
                 <Loader active inline='centered'>Cargando...</Loader>
             ) : (
-                <p>Tabla</p>
+                <TableHistroryPayments payments={payments}/>
             )}
         </>
     )

@@ -8,5 +8,6 @@ export * from './Categories';
 export * from './Product';
 export * from './Mesas';
 export * from './Orders';
+export * from './Payments';
 
 
