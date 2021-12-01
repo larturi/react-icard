@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 
+import { useTable } from '../../../hooks';
+
 import './SelectTable.scss';
 
-export const SelectTable = () => {
+export const SelectTable = (props) => {
+
+    const { history } = props;
 
     const [ tableNum , setTableNum ] = useState(null);
     const [ error, setError ] = useState(null);
 
-    const onSubmit = () => {
+    const { isExistTable } = useTable();
+
+    const onSubmit = async () => {
         setError(null);
-        
+
         if (!tableNum) {
             setError('Debe introducir una mesa');
         } else {
-            console.log('Entrando');
+            const existTable = await isExistTable(tableNum);
+
+            if (existTable) {
+                history.push(`/client/${tableNum}`);
+            } else {
+                setError('La mesa no existe');
+            }
         }
     }
 

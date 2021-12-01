@@ -24,6 +24,19 @@ export const getTableApi = async (idTable) => {
     }
 };
 
+export const getTableByNumberApi = async (numberTable) => {
+    try {
+        const tableFilter = `number=${numberTable}`;
+        const url = `${BASE_API}/api/tables/?${tableFilter}`;
+        const response = await fetchData(url);
+        const result = await response.json();
+        console.log(result);
+        return result;
+    } catch (error) {
+        throw error;
+    } 
+};
+
 export const addTableApi = async (data, token) => {
     try {
         const url = `${BASE_API}/api/tables/`;
@@ -43,7 +56,7 @@ export const addTableApi = async (data, token) => {
     } catch (error) {
         throw error;
     }
-}
+};
 
 export const updateTableApi = async (id, data, token) => {
     try {
@@ -64,7 +77,7 @@ export const updateTableApi = async (id, data, token) => {
     } catch (error) {
         throw error;
     }
-}
+};
 
 export const deleteTableApi = async (id, token) => {
     try {
@@ -83,4 +96,4 @@ export const deleteTableApi = async (id, token) => {
     } catch (error) {
         throw error;
     }
-}
+};
