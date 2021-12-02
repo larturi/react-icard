@@ -14,8 +14,6 @@ export const PaymentProductList = (props) => {
     const { getOrdersByPayment } = useOrder();
     const [orders, setOrders] = useState([]);
 
-    console.log(orders);
-
     useEffect(() => {
         (async () => {
             const response = await getOrdersByPayment(payment.id);

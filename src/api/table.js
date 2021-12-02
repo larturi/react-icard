@@ -30,7 +30,6 @@ export const getTableByNumberApi = async (numberTable) => {
         const url = `${BASE_API}/api/tables/?${tableFilter}`;
         const response = await fetchData(url);
         const result = await response.json();
-        console.log(result);
         return result;
     } catch (error) {
         throw error;
