@@ -1,0 +1,28 @@
+.list-categories-client {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  
+    &__category {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border: 1px solid rgb(226, 223, 223);
+      margin: 7px 0;
+      padding: 10px 10px;
+      border-radius: 5px;
+  
+      .ui.image {
+        margin-right: 10px;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 100%;
+      }
+
+      span {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgb(63, 63, 63);
+      }
+    }
+}
