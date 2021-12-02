@@ -1,5 +1,5 @@
 import { BasicLayout, ClientLayout } from '../layouts';
-import { SelectTable, Categories } from '../pages/ClientPages';
+import { SelectTable, Categories, Products } from '../pages/ClientPages';
 
 const routesClient = [
     {
@@ -12,6 +12,12 @@ const routesClient = [
         path: '/client/:tableNumber',
         layout: ClientLayout,
         component: Categories,
+        exact: true
+    },
+    {
+        path: '/client/:tableNumber/:categoryId',
+        layout: ClientLayout,
+        component: Products,
         exact: true
     },
 ];
