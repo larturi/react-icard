@@ -5,8 +5,6 @@ import { useParams, Link } from 'react-router-dom';
 import { ListProducts } from '../../../components/Client';
 import { useProduct } from '../../../hooks';
 
-import './Products.scss';
-
 export const Products = () => {
 
 
