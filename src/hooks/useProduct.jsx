@@ -6,6 +6,7 @@ import {
     addProductApi,
     updateProductApi,
     deleteProductApi,
+    getProductByCategoryApi,
 } from '../api/product';
 
 import { useAuth } from './';
@@ -74,6 +75,18 @@ export function useProduct() {
         }
     };
 
+    const getProductByCategory = async (idCategory) => {
+        try {
+            setLoading(true);
+            const response = await getProductByCategoryApi(idCategory);
+            setLoading(false);
+            setProducts(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    };
+
     return {
         loading,
         error,
@@ -83,6 +96,7 @@ export function useProduct() {
         addProduct,
         updateProduct,
         deleteProduct,
+        getProductByCategory,
     }
 
 };

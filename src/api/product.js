@@ -99,3 +99,15 @@ export const deleteProductApi = async (id, token) => {
         throw error;
     }
 };
+
+export const getProductByCategoryApi = async (idCategory) => {
+    console.log(idCategory);
+    try {
+        const url = `${BASE_API}/api/products/?category=${idCategory}`;
+        const response = await fetchData(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
