@@ -14,6 +14,11 @@ export const Cart = () => {
     const { tableNumber } = useParams();
 
     const [products, setProducts] = useState(null);
+    const [reloadCart, setReloadCart] = useState(false);
+
+    const onReloadCart = () => {
+        setReloadCart((prev) => !prev);
+    }
 
     useEffect(() => {
         (async () => {
@@ -26,7 +31,7 @@ export const Cart = () => {
           }
           setProducts(productsArray);
         })();
-      }, []);
+      }, [reloadCart]);
 
     return (
         <div>
@@ -34,7 +39,7 @@ export const Cart = () => {
             {!products ? (
                 <p>Cargando...</p>
             ) : size(products) > 0 ? (
-                <ListProductsCart products={products} />
+                <ListProductsCart products={products} onReloadCart={onReloadCart}/>
             ) : (
                 <div style={{ textAlign: "center" }}>
                 <p>Tu carrito esta vacio</p>
