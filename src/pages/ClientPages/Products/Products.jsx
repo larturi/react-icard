@@ -12,8 +12,6 @@ export const Products = () => {
     const { loading, products, getProductByCategory } = useProduct();
 
     useEffect(() => getProductByCategory(categoryId), [categoryId]);
-
-    console.log(products);
     
     return (
         <div>

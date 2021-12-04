@@ -10,6 +10,16 @@ export const ListProductsCart = (props) => {
 
     const { products, onReloadCart } = props;
 
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+        let totalTemp = 0;
+        forEach(products, (product) => {
+            totalTemp += Number(product.price);
+        });
+        setTotal(totalTemp.toFixed(2));
+    }, [products]);
+
     const removeProduct = (index) => {
         removeProductCartApi(index);
         onReloadCart();
@@ -29,7 +39,7 @@ export const ListProductsCart = (props) => {
             ))}
 
             <Button primary fluid>
-                Realizar Pedido
+                Realizar Pedido {`(${total})`}
             </Button>
         </div>
     )

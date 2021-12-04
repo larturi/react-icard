@@ -101,7 +101,6 @@ export const deleteProductApi = async (id, token) => {
 };
 
 export const getProductByCategoryApi = async (idCategory) => {
-    console.log(idCategory);
     try {
         const url = `${BASE_API}/api/products/?category=${idCategory}`;
         const response = await fetchData(url);
