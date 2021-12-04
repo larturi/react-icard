@@ -1,10 +1,8 @@
-import { fetchData } from "./fetchData";
-
-const BASE_API = process.env.REACT_APP_BASE_API;
 const PRODUCTS_CART = 'productsCart';
 
 export const getProductsCart = () => {
     const response = localStorage.getItem(PRODUCTS_CART);
+    console.log(response);
     return response ? JSON.parse(response) : [];
 }
 
