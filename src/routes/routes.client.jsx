@@ -3,7 +3,8 @@ import {
     SelectTable, 
     Categories, 
     Products, 
-    Cart 
+    Cart,
+    OrdersHistory,
 } from '../pages/ClientPages';
 
 const routesClient = [
@@ -23,6 +24,12 @@ const routesClient = [
         path: '/client/:tableNumber/cart',
         layout: ClientLayout,
         component: Cart,
+        exact: true
+    },
+    {
+        path: '/client/:tableNumber/orders',
+        layout: ClientLayout,
+        component: OrdersHistory,
         exact: true
     },
     {

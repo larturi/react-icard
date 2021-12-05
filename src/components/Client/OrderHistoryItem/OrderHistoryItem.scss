@@ -1,0 +1,59 @@
+.order-history-item {
+    position: relative;
+    border: 1px solid rgb(226, 223, 223);
+    padding: 20px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    &.pending {
+      background-color: rgb(206, 236, 253);
+    }
+    &.delivered {
+      background-color: rgb(183, 255, 115);
+    }
+  
+    &__time {
+      position: absolute;
+      top: -14px;
+      right: 10px;
+      background-color: #fff;
+      padding: 5px 20px;
+      border: 1px solid rgb(226, 223, 223);
+    }
+  
+    &__product {
+      display: flex;
+      align-items: center;
+  
+      .ui.image {
+        margin-right: 10px;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 5px;
+      }
+  
+      p {
+        margin: 0;
+        font-weight: bold;
+        font-size: 15px;
+      }
+    }
+
+    .label-state {
+        padding: 1px 8px;
+        font-size: 12px;
+        border-radius: 18px;
+
+        &.black {
+            background-color: rgb(33, 24, 24);
+            color: white;
+        }
+
+        &.green {
+            background-color: rgb(41, 129, 0);
+            color: white;
+        }
+    }
+  }
